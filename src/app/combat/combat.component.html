@@ -1,38 +1,61 @@
-<div>
-    <h2>Gestión de Combates</h2>
-  
-    <!-- Formulario para crear o actualizar combate -->
+<div class="combat-container">
+  <h2 class="combat-title">Gestión de Combates</h2>
+
+  <!-- Formulario para crear o actualizar combate -->
+  <div class="combat-card">
     <form *ngIf="selectedCombat; else newCombatForm" (ngSubmit)="updateCombat()">
-      <input [(ngModel)]="selectedCombat.gym" name="gym" type="number" placeholder="ID del Gimnasio" required />
-      <input [(ngModel)]="selectedCombat.boxers" name="boxers" placeholder="Boxeadores (separados por comas)" required />
-      <button type="submit">Actualizar</button>
-      <button type="button" (click)="selectedCombat = null">Cancelar</button>
+      <div class="form-group">
+        <label for="gym">ID del Gimnasio</label>
+        <input [(ngModel)]="selectedCombat.gym" name="gym" id="gym" type="number" class="form-control" placeholder="ID del Gimnasio" required />
+      </div>
+      <div class="form-group">
+        <label for="boxers">Boxeadores</label>
+        <input [(ngModel)]="selectedCombat.boxers" name="boxers" id="boxers" class="form-control" placeholder="Boxeadores (separados por comas)" required />
+      </div>
+      <div class="form-group">
+        <label for="date">Fecha del Combate</label>
+        <input [(ngModel)]="selectedCombat.date" name="date" id="date" type="date" class="form-control" required />
+      </div>
+      <button type="submit" class="btn btn-primary">Actualizar</button>
+      <button type="button" class="btn btn-secondary" (click)="selectedCombat = null">Cancelar</button>
     </form>
-  
+
     <ng-template #newCombatForm>
       <form (ngSubmit)="createCombat()">
-        <input [(ngModel)]="newCombat.gym" name="gym" type="number" placeholder="ID del Gimnasio" required />
-        <input [(ngModel)]="newCombat.boxers" name="boxers" placeholder="Boxeadores (separados por comas)" required />
-        <button type="submit">Crear</button>
+        <div class="form-group">
+          <label for="newGym">ID del Gimnasio</label>
+          <input [(ngModel)]="newCombat.gym" name="gym" id="newGym" type="number" class="form-control" placeholder="ID del Gimnasio" required />
+        </div>
+        <div class="form-group">
+          <label for="newBoxers">Boxeadores</label>
+          <input [(ngModel)]="newCombat.boxers" name="boxers" id="newBoxers" class="form-control" placeholder="Boxeadores (separados por comas)" required />
+        </div>
+        <div class="form-group">
+          <label for="newDate">Fecha del Combate</label>
+          <input [(ngModel)]="newCombat.date" name="date" id="newDate" type="date" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-success">Crear</button>
       </form>
     </ng-template>
-  
-    <!-- Lista de combates -->
-    <ul>
-      <li *ngFor="let combat of combats">
-        <span>Combate ID: {{ combat.id }} - Gimnasio: {{ combat.gym }} - Boxeadores: {{ combat.boxers.join(', ') }}</span>
-        <button (click)="selectCombat(combat)">Editar</button>
-        <button (click)="deleteCombat(combat.id)">Eliminar</button>
-        <button (click)="getBoxersByCombatId(combat.id)">Ver Boxeadores</button>
-      </li>
-    </ul>
-  
-    <!-- Lista de boxeadores del combate seleccionado -->
-    <div *ngIf="boxers.length > 0">
-      <h3>Boxeadores del Combate Seleccionado</h3>
-      <ul>
-        <li *ngFor="let boxer of boxers">{{ boxer }}</li>
-      </ul>
-    </div>
   </div>
-  
+
+  <!-- Lista de combates -->
+  <ul class="list-group combat-list">
+    <li *ngFor="let combat of combats" class="list-group-item d-flex justify-content-between align-items-center">
+      <span>Combate ID: {{ combat.id }} - Gimnasio: {{ combat.gym }} - Boxeadores: {{ combat.boxers.join(', ') }} - Fecha: {{ combat.date }}</span>
+      <div>
+        <button class="btn btn-info btn-sm mr-2" (click)="selectCombat(combat)">Editar</button>
+        <button class="btn btn-danger btn-sm mr-2" (click)="deleteCombat(combat.id)">Eliminar</button>
+        <button class="btn btn-secondary btn-sm" (click)="getBoxersByCombatId(combat.id)">Ver Boxeadores</button>
+      </div>
+    </li>
+  </ul>
+
+  <!-- Lista de boxeadores del combate seleccionado -->
+  <div *ngIf="boxers.length > 0" class="combat-card">
+    <h3 class="combat-subtitle">Boxeadores del Combate Seleccionado</h3>
+    <ul class="list-group">
+      <li *ngFor="let boxer of boxers" class="list-group-item">{{ boxer }}</li>
+    </ul>
+  </div>
+</div>

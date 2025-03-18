@@ -5,15 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-usuario',
-  standalone: true,
+  selector: 'app-user',
   imports: [FormsModule, CommonModule],
+  standalone: true,
   templateUrl: './usuario.component.html',
-  styleUrls: ['./usuario.component.css'] // Corregido: styleUrl -> styleUrls
+  styleUrls: ['./usuario.component.css']
 })
 export class UserComponent implements OnInit {
   users: User[] = [];
-  newUser: User = { id: 0, name: '', birthDate: new Date() , email: '', isAdmin: false, isHidden: false }; 
+  newUser: User = { id: 0, name: '', email: '', birthDate: new Date(), isAdmin: false, isHidden: false };
   selectedUser: User | null = null;
 
   constructor(private userService: UserService) {}
@@ -39,7 +39,7 @@ export class UserComponent implements OnInit {
     this.userService.createUser(this.newUser).subscribe(
       (data) => {
         this.users.push(data);
-        this.newUser = {id: 0, name: '', birthDate: new Date(), email: '', isAdmin: false, isHidden: false}; 
+        this.newUser = { id: 0, name: '', email: '', birthDate: new Date(), isAdmin: false, isHidden: false }; // Resetear el formulario
       },
       (error) => {
         console.error('Error al crear usuario:', error);

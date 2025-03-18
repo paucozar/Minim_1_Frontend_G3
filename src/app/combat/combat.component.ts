@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CombatComponent implements OnInit {
   combats: Combat[] = [];
-  newCombat: Combat = { id: 0, gym: 0, boxers: [] };
+  newCombat: Combat = { id: 0, gym: 0, date: new Date(), boxers: [] };
   selectedCombat: Combat | null = null;
   boxers: string[] = [];
 
@@ -41,7 +41,7 @@ export class CombatComponent implements OnInit {
       this.combatService.createCombat(this.newCombat).subscribe(
         (data) => {
           this.combats.push(data);
-          this.newCombat = { id: 0, gym: 0, boxers: [] }; // Resetear el formulario
+          this.newCombat = { id: 0, gym: 0, date: new Date(), boxers: [] }; // Resetear el formulario
         },
         (error) => {
           console.error('Error al crear combate:', error);
