@@ -1,0 +1,30 @@
+<div>
+    <h2>Gestión de Gimnasios</h2>
+  
+    <!-- Formulario para crear o actualizar gimnasio -->
+    <form *ngIf="selectedGym; else newGymForm" (ngSubmit)="updateGym()">
+      <input [(ngModel)]="selectedGym.name" name="name" placeholder="Nombre" required />
+      <input [(ngModel)]="selectedGym.place" name="place" placeholder="Lugar" required />
+      <input [(ngModel)]="selectedGym.price" name="price" type="number" placeholder="Precio" required />
+      <button type="submit">Actualizar</button>
+      <button type="button" (click)="selectedGym = null">Cancelar</button>
+    </form>
+  
+    <ng-template #newGymForm>
+      <form (ngSubmit)="createGym()">
+        <input [(ngModel)]="newGym.name" name="name" placeholder="Nombre" required />
+        <input [(ngModel)]="newGym.place" name="place" placeholder="Lugar" required />
+        <input [(ngModel)]="newGym.price" name="price" type="number" placeholder="Precio" required />
+        <button type="submit">Crear</button>
+      </form>
+    </ng-template>
+  
+    <!-- Lista de gimnasios -->
+    <ul>
+      <li *ngFor="let gym of gyms">
+        {{ gym.name }} - {{ gym.place }} - ${{ gym.price }}
+        <button (click)="selectGym(gym)">Editar</button>
+        <button (click)="deleteGym(gym.id)">Eliminar</button>
+      </li>
+    </ul>
+  </div>

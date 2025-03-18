@@ -1,0 +1,30 @@
+<div>
+    <h2>Gestión de Usuarios</h2>
+  
+    <!-- Formulario para crear o actualizar usuario -->
+    <form *ngIf="selectedUser; else newUserForm" (ngSubmit)="updateUser()">
+      <input [(ngModel)]="selectedUser.name" name="name" placeholder="Nombre" required />
+      <input [(ngModel)]="selectedUser.age" name="age" type="number" placeholder="Edad" required />
+      <input [(ngModel)]="selectedUser.email" name="email" type="email" placeholder="Correo" required />
+      <button type="submit">Actualizar</button>
+      <button type="button" (click)="selectedUser = null">Cancelar</button>
+    </form>
+  
+    <ng-template #newUserForm>
+      <form (ngSubmit)="createUser()">
+        <input [(ngModel)]="newUser.name" name="name" placeholder="Nombre" required />
+        <input [(ngModel)]="newUser.age" name="age" type="number" placeholder="Edad" required />
+        <input [(ngModel)]="newUser.email" name="email" type="email" placeholder="Correo" required />
+        <button type="submit">Crear</button>
+      </form>
+    </ng-template>
+  
+    <!-- Lista de usuarios -->
+    <ul>
+      <li *ngFor="let user of users">
+        {{ user.name }} ({{ user.age }} años) - {{ user.email }}
+        <button (click)="selectUser(user)">Editar</button>
+        <button (click)="deleteUser(user.id)">Eliminar</button>
+      </li>
+    </ul>
+  </div>
