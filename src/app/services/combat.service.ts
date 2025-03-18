@@ -7,7 +7,10 @@ import { Combat } from '../models/combat.model';
   providedIn: 'root',
 })
 export class CombatService {
-  private apiUrl = 'http://localhost:7000/api/combat';
+  private apiUrl = 'http://localhost:9000/api/combat';
+  private idUrl = 'http://localhost:9000/api/combat/{id}';
+  private boxersUrl = 'http://localhost:9000/api/combat/{id}/boxers';
+
 
   constructor(private http: HttpClient) {}
 
@@ -23,21 +26,21 @@ export class CombatService {
 
   // Obtener un combate por ID
   getCombatById(id: number): Observable<Combat> {
-    return this.http.get<Combat>(`${this.apiUrl}/${id}`);
+    return this.http.get<Combat>(`${this.idUrl}/${id}`);
   }
 
   // Actualizar un combate por ID
   updateCombat(id: number, combat: Combat): Observable<Combat> {
-    return this.http.put<Combat>(`${this.apiUrl}/${id}`, combat);
+    return this.http.put<Combat>(`${this.idUrl}/${id}`, combat);
   }
 
   // Eliminar un combate por ID
   deleteCombat(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.idUrl}/${id}`);
   }
 
   // Obtener boxeadores por ID del combate
   getBoxersByCombatId(id: number): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/${id}/boxers`);
+    return this.http.get<string[]>(`${this.boxersUrl}/${id}/boxers`);
   }
 }
