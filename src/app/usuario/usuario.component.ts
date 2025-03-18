@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class UserComponent implements OnInit {
   users: User[] = [];
-  newUser: User = { id: 0, name: '', age: 0, email: '' };
+  newUser: User = { id: 0, name: '', birthDate: new Date() , email: '', isAdmin: false, isHidden: false }; 
   selectedUser: User | null = null;
 
   constructor(private userService: UserService) {}
@@ -39,7 +39,7 @@ export class UserComponent implements OnInit {
     this.userService.createUser(this.newUser).subscribe(
       (data) => {
         this.users.push(data);
-        this.newUser = { id: 0, name: '', age: 0, email: '' }; // Resetear el formulario
+        this.newUser = {id: 0, name: '', birthDate: new Date(), email: '', isAdmin: false, isHidden: false}; 
       },
       (error) => {
         console.error('Error al crear usuario:', error);

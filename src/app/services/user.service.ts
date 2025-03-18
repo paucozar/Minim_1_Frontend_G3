@@ -7,23 +7,26 @@ import { User } from '../models/user.model';
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'http://localhost:7000/api/users';
+  private registerUrl = 'http://localhost:9000/api/users/register';
+  private listUrl = 'http://localhost:9000/api/users';
+  private updateUrl = 'http://localhost:9000/api/users/{id}';
+  private apiUrl = 'http://localhost:9000/api/users/{id}';
 
   constructor(private http: HttpClient) {}
 
   // Crear un nuevo usuario
   createUser(user: User): Observable<User> {
-    return this.http.post<User>(this.apiUrl, user);
+    return this.http.post<User>(this.registerUrl, user);
   }
 
   // Obtener todos los usuarios
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl);
+    return this.http.get<User[]>(this.listUrl);
   }
 
   // Actualizar un usuario por ID
   updateUser(id: number, user: User): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/${id}`, user);
+    return this.http.put<User>(`${this.updateUrl}/${id}`, user);
   }
 
   // Eliminar un usuario por ID

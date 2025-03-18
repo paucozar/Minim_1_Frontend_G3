@@ -1,12 +1,12 @@
 export interface User {
     id: number;
     name: string;
-    age: number;
+    birthDate: Date;
     email: string;
+    isAdmin: boolean;
+    isHidden: boolean;
   }
 export class User implements User {
-    constructor(     
-      
-    ) {}
+    constructor() {}
 }
   
