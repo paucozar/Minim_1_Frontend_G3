@@ -100,7 +100,15 @@
   .form-footer p {
     margin: 0.4rem 0;
   }
+  .login-link {
+    color: #63b3ed;
+  }
   
+  .login-link:hover {
+    color: #90cdf4;
+  }
+
+
   @media (max-width: 576px) {
     .container {
       max-width: 100%;

@@ -3,10 +3,12 @@ import { Component, inject, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule,RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   standalone: true
@@ -20,6 +22,7 @@ export class LoginComponent implements OnInit {
   Prova: string = "Este texto deberia estar en mayusculas";
   formularioLogin: FormGroup;
   authService = inject(AuthService);
+  private router = inject(Router);
   @Output() loggedin = new EventEmitter<string>();
   @Output() exportLoggedIn = new EventEmitter<boolean>();
 
@@ -51,6 +54,8 @@ ngOnInit(): void {
       next: (response) => {
         console.log('Login exitoso:', response);
         this.exportLoggedIn.emit(true);
+        this.router.navigate(['/usuario']);
+
       
       },
       error: (error) => {
