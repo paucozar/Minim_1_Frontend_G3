@@ -20,11 +20,13 @@ export class RegisterComponent {
     private form: FormBuilder,
     private userService: UserService
   ) {
-    
     this.formularioRegistre = this.form.group({
-      name: ['', Validators.required],  
+      name: ['', Validators.required],
+      birthDate: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      age: ['', [Validators.required, Validators.min(1)]]  
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      isAdmin: [false],
+      isHidden: [false]
     });
   }
 

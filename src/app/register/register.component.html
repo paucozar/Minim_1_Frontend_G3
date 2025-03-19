@@ -14,6 +14,17 @@
     </div>
 
     <div class="form-group">
+      <label for="birthDate">Data de naixement:</label>
+      <input 
+        type="date" 
+        id="birthDate" 
+        formControlName="birthDate"
+        class="form-control"
+        [ngClass]="{'form-control-error': teError('birthDate', 'required')}">
+      <div class="error-message" *ngIf="teError('birthDate', 'required')">Data de naixement requerida.</div>
+    </div>
+
+    <div class="form-group">
       <label for="email">Email:</label>
       <input 
         type="email" 
@@ -26,15 +37,33 @@
     </div>
 
     <div class="form-group">
-      <label for="age">Edat:</label>
+      <label for="password">Contrasenya:</label>
       <input 
-        type="number" 
-        id="age" 
-        formControlName="age"
+        type="password" 
+        id="password" 
+        formControlName="password"
         class="form-control"
-        [ngClass]="{'form-control-error': teError('age', 'required') || teError('age', 'min')}">
-      <div class="error-message" *ngIf="teError('age', 'required')">Edat requerida.</div>
-      <div class="error-message" *ngIf="teError('age', 'min')">Edat > 0.</div>
+        [ngClass]="{'form-control-error': teError('password', 'required') || teError('password', 'minlength')}">
+      <div class="error-message" *ngIf="teError('password', 'required')">Contrasenya requerida.</div>
+      <div class="error-message" *ngIf="teError('password', 'minlength')">La contrasenya ha de tenir almenys 8 caràcters.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="isAdmin">Administrador:</label>
+      <input 
+        type="checkbox" 
+        id="isAdmin" 
+        formControlName="isAdmin"
+        class="form-check-input">
+    </div>
+
+    <div class="form-group">
+      <label for="isHidden">Ocult:</label>
+      <input 
+        type="checkbox" 
+        id="isHidden" 
+        formControlName="isHidden"
+        class="form-check-input">
     </div>
 
     <div class="form-actions">

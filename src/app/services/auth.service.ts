@@ -6,9 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = "https://reqres.in/api/login";
-  constructor(private http: HttpClient) { }
-  
+  private apiUrl = 'http://localhost:9000/api/users/login'; // URL del endpoint de login
+
+  constructor(private http: HttpClient) {}
+
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(this.apiUrl, credentials);
   }

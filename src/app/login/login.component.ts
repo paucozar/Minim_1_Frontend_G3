@@ -42,25 +42,28 @@ ngOnInit(): void {
     return this.formularioLogin.get(controlName)?.hasError(errorType) && this.formularioLogin.get(controlName)?.touched;  
   }
 
-  login(){
+  login() {
     if (this.formularioLogin.invalid) {
       this.formularioLogin.markAllAsTouched();
       return;
     }
-
+  
     const loginData = this.formularioLogin.value;
-
+  
     this.authService.login(loginData).subscribe({
       next: (response) => {
         console.log('Login exitoso:', response);
-        this.exportLoggedIn.emit(true);
-        this.router.navigate(['/usuario']);
-
-      
+        this.router.navigate(['/users']); // Redirigir al componente de usuarios
       },
       error: (error) => {
         console.error('Error en el login:', error);
-        alert('Error en el login, verifica tus credenciales');
+        if (error.status === 404) {
+          alert('Usuario no encontrado. Por favor, verifica tu email.');
+        } else if (error.status === 400 || error.status === 401) {
+          alert('Contraseña incorrecta. Por favor, verifica tu contraseña.');
+        } else {
+          alert('Error en el servidor. Inténtalo más tarde.');
+        }
       }
     });
   }
