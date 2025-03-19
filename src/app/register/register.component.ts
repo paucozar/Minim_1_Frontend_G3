@@ -35,7 +35,7 @@ export class RegisterComponent {
     return !!control && control.touched && control.hasError(tipusError);
   }
 
-  // 注册方法 - 更改为使用createUser
+
   registrar(): void {
     if (this.formularioRegistre.invalid) {
       Object.keys(this.formularioRegistre.controls).forEach(key => {
@@ -45,15 +45,15 @@ export class RegisterComponent {
       return;
     }
 
-    // 获取表单数据
+    // Obtener datos del formulario
     const dades = this.formularioRegistre.value;
     
-    // 使用createUser代替registerUser
+
     this.userService.createUser(dades).subscribe({
       next: () => {
-        // 触发注册完成事件
+        // Activa el evento de finalización del registro
         this.registreComplet.emit();
-        // 重置表单
+        // Restablecer formularios
         this.formularioRegistre.reset();
       },
       error: (err) => {
