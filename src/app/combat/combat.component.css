@@ -1,108 +1,126 @@
-.combat-container {
-    padding: 20px;
-    background-color: #f5f5f5;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .combat-title {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333333;
-  }
-  
-  .combat-card {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-  }
-  
-  .combat-subtitle {
-    text-align: center;
-    margin-bottom: 15px;
-    color: #333333;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-control {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-  }
-  
-  .btn {
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .btn-primary {
-    background-color: #007bff;
-    border: none;
-    color: #ffffff;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0056b3;
-  }
-  
-  .btn-secondary {
-    background-color: #6c757d;
-    border: none;
-    color: #ffffff;
-  }
-  
-  .btn-secondary:hover {
-    background-color: #5a6268;
-  }
-  
-  .btn-success {
-    background-color: #28a745;
-    border: none;
-    color: #ffffff;
-  }
-  
-  .btn-success:hover {
-    background-color: #218838;
-  }
-  
-  .btn-info {
-    background-color: #17a2b8;
-    border: none;
-    color: #ffffff;
-  }
-  
-  .btn-info:hover {
-    background-color: #138496;
-  }
-  
-  .btn-danger {
-    background-color: #dc3545;
-    border: none;
-    color: #ffffff;
-  }
-  
-  .btn-danger:hover {
-    background-color: #c82333;
-  }
-  
-  .list-group-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #cccccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-  }
-  
-  .text-danger {
-    color: #ff0000;
-    font-size: 0.875em;
-  }
+.combat-list-container {
+  margin-top: 20px;
+}
+
+.combat-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.combat-card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.combat-header {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  background-color: #f8f9fa;
+}
+
+.combat-id {
+  color: #495057;
+  font-weight: bold;
+  margin: 0;
+}
+
+.combat-id .id-value {
+  font-weight: normal;
+  color: #6c757d;
+}
+
+.combat-date {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.combat-body {
+  padding: 15px;
+}
+
+.info-section {
+  margin-bottom: 12px;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #495057;
+  margin-right: 8px;
+}
+
+.boxer-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.entity-badge {
+  display: inline-flex;
+  padding: 5px 10px;
+  border-radius: 4px;
+  background-color: #f1f8ff;
+  border: 1px solid #d1e5f9;
+  color: #0366d6;
+  font-size: 0.9rem;
+}
+
+.gym-badge {
+  background-color: #f1f8ff;
+  border-color: #d1e5f9;
+  color: #0366d6;
+}
+
+.boxer-badge {
+  background-color: #f0fff4;
+  border-color: #c6f6d5;
+  color: #38a169;
+}
+
+.id-display {
+  font-size: 0.8rem;
+  color: #718096;
+  margin-left: 4px;
+}
+
+.combat-footer {
+  padding: 12px 15px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-edit {
+  background-color: #4299e1;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-edit:hover {
+  background-color: #3182ce;
+}
+
+.btn-delete {
+  background-color: #fff;
+  color: #e53e3e;
+  border: 1px solid #e53e3e;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-delete:hover {
+  background-color: #e53e3e;
+  color: white;
+}
