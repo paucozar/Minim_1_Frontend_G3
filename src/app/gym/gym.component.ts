@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class GymComponent implements OnInit {
   gyms: Gym[] = [];
-  newGym: Gym = { id: 0, name: '', place: '', price: 0 };
+  newGym: Gym = { _id: '', name: '', place: '', price: 0 };
   selectedGym: Gym | null = null;
 
   constructor(private gymService: GymService) {}
@@ -39,7 +39,7 @@ export class GymComponent implements OnInit {
     this.gymService.createGym(this.newGym).subscribe(
       (data) => {
         this.gyms.push(data);
-        this.newGym = { id: 0, name: '', place: '', price: 0 }; // Resetear el formulario
+        this.newGym = { _id: '', name: '', place: '', price: 0 }; // Resetear el formulario
       },
       (error) => {
         console.error('Error al crear gimnasio:', error);
@@ -50,9 +50,9 @@ export class GymComponent implements OnInit {
   // Actualizar un gimnasio
   updateGym(): void {
     if (this.selectedGym) {
-      this.gymService.updateGym(this.selectedGym.id, this.selectedGym).subscribe(
+      this.gymService.updateGym(this.selectedGym).subscribe(
         (data) => {
-          const index = this.gyms.findIndex((g) => g.id === data.id);
+          const index = this.gyms.findIndex((g) => g._id === data._id);
           if (index !== -1) {
             this.gyms[index] = data;
           }
@@ -66,10 +66,10 @@ export class GymComponent implements OnInit {
   }
 
   // Eliminar un gimnasio
-  deleteGym(id: number): void {
-    this.gymService.deleteGym(id).subscribe(
+  deleteGym(_id: string): void {
+    this.gymService.deleteGym(_id).subscribe(
       () => {
-        this.gyms = this.gyms.filter((g) => g.id !== id);
+        this.gyms = this.gyms.filter((g) => g._id !== _id);
       },
       (error) => {
         console.error('Error al eliminar gimnasio:', error);

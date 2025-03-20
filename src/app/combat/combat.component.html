@@ -42,11 +42,11 @@
   <!-- Lista de combates -->
   <ul class="list-group combat-list">
     <li *ngFor="let combat of combats" class="list-group-item d-flex justify-content-between align-items-center">
-      <span>Combate ID: {{ combat.id }} - Gimnasio: {{ combat.gym }} - Boxeadores: {{ combat.boxers.join(', ') }} - Fecha: {{ combat.date }}</span>
+      <span>Combate ID: {{ combat._id }} - Gimnasio: {{ combat.gym }} - Boxeadores: {{ combat.boxers.join(', ') }} - Fecha: {{ combat.date }}</span>
       <div>
         <button class="btn btn-info btn-sm mr-2" (click)="selectCombat(combat)">Editar</button>
-        <button class="btn btn-danger btn-sm mr-2" (click)="deleteCombat(combat.id)">Eliminar</button>
-        <button class="btn btn-secondary btn-sm" (click)="getBoxersByCombatId(combat.id)">Ver Boxeadores</button>
+        <button class="btn btn-danger btn-sm mr-2" (click)="deleteCombat(combat._id)">Eliminar</button>
+        <button class="btn btn-secondary btn-sm" (click)="getBoxersByCombatId(combat._id)">Ver Boxeadores</button>
       </div>
     </li>
   </ul>

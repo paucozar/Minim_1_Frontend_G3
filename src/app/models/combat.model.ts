@@ -1,8 +1,8 @@
 import { Data } from "@angular/router";
 
 export interface Combat {
-    id: number;
-    gym: number;
+    _id: string;
+    gym: string;
     date: Data;
     boxers: string[];
 }

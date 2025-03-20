@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CombatComponent implements OnInit {
   combats: Combat[] = [];
-  newCombat: Combat = { id: 0, gym: 0, date: new Date(), boxers: [] };
+  newCombat: Combat = { _id: '', gym: '', date: new Date(), boxers: [] };
   selectedCombat: Combat | null = null;
   boxers: string[] = [];
 
@@ -41,7 +41,7 @@ export class CombatComponent implements OnInit {
       this.combatService.createCombat(this.newCombat).subscribe(
         (data) => {
           this.combats.push(data);
-          this.newCombat = { id: 0, gym: 0, date: new Date(), boxers: [] }; // Resetear el formulario
+          this.newCombat = { _id: '', gym: '', date: new Date(), boxers: [] }; // Resetear el formulario
         },
         (error) => {
           console.error('Error al crear combate:', error);
@@ -52,9 +52,9 @@ export class CombatComponent implements OnInit {
     // Actualizar un combate
     updateCombat(): void {
       if (this.selectedCombat) {
-        this.combatService.updateCombat(this.selectedCombat.id, this.selectedCombat).subscribe(
+        this.combatService.updateCombat(this.selectedCombat).subscribe(
           (data) => {
-            const index = this.combats.findIndex((c) => c.id === data.id);
+            const index = this.combats.findIndex((c) => c._id === data._id);
             if (index !== -1) {
               this.combats[index] = data;
             }
@@ -67,10 +67,10 @@ export class CombatComponent implements OnInit {
       }
     }
       // Eliminar un combate
-  deleteCombat(id: number): void {
-    this.combatService.deleteCombat(id).subscribe(
+  deleteCombat(_id: string): void {
+    this.combatService.deleteCombat(_id).subscribe(
       () => {
-        this.combats = this.combats.filter((c) => c.id !== id);
+        this.combats = this.combats.filter((c) => c._id !== _id);
       },
       (error) => {
         console.error('Error al eliminar combate:', error);
@@ -79,8 +79,8 @@ export class CombatComponent implements OnInit {
   }
 
   // Obtener boxeadores por ID del combate
-  getBoxersByCombatId(id: number): void {
-    this.combatService.getBoxersByCombatId(id).subscribe(
+  getBoxersByCombatId(_id: string): void {
+    this.combatService.getBoxersByCombatId(_id).subscribe(
       (data) => {
         this.boxers = data;
       },

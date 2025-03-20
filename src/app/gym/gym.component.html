@@ -24,7 +24,7 @@
       <li *ngFor="let gym of gyms">
         {{ gym.name }} - {{ gym.place }} - ${{ gym.price }}
         <button (click)="selectGym(gym)">Editar</button>
-        <button (click)="deleteGym(gym.id)">Eliminar</button>
+        <button (click)="deleteGym(gym._id)">Eliminar</button>
       </li>
     </ul>
   </div>

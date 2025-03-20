@@ -8,8 +8,7 @@ import { Combat } from '../models/combat.model';
 })
 export class CombatService {
   private apiUrl = 'http://localhost:9000/api/combat';
-  private idUrl = 'http://localhost:9000/api/combat/{id}';
-  private boxersUrl = 'http://localhost:9000/api/combat/{id}/boxers';
+
 
 
   constructor(private http: HttpClient) {}
@@ -25,22 +24,22 @@ export class CombatService {
   }
 
   // Obtener un combate por ID
-  getCombatById(id: number): Observable<Combat> {
-    return this.http.get<Combat>(`${this.idUrl}/${id}`);
+  getCombatById(_id: string): Observable<Combat> {
+    return this.http.get<Combat>(`${this.apiUrl}/${_id}`);
   }
 
   // Actualizar un combate por ID
-  updateCombat(id: number, combat: Combat): Observable<Combat> {
-    return this.http.put<Combat>(`${this.idUrl}/${id}`, combat);
+  updateCombat(combat: Combat): Observable<Combat> {
+    return this.http.put<Combat>(`${this.apiUrl}/${combat._id}`, combat);
   }
 
   // Eliminar un combate por ID
-  deleteCombat(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.idUrl}/${id}`);
+  deleteCombat(_id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${_id}`);
   }
 
   // Obtener boxeadores por ID del combate
-  getBoxersByCombatId(id: number): Observable<string[]> {
-    return this.http.get<string[]>(`${this.boxersUrl}/${id}/boxers`);
+  getBoxersByCombatId(_id: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.apiUrl}/${_id}/boxers`);
   }
 }

@@ -9,7 +9,7 @@ import { Gym } from '../models/gym.model';
 export class GymService {
   private apiUrl = 'http://localhost:9000/api/gym';
   private getUrl = 'http://localhost:9000/api/gym';
-  private getIdUrl = 'http://localhost:9000/api/gym/{id}';
+  
 
 
   constructor(private http: HttpClient) {}
@@ -25,17 +25,18 @@ export class GymService {
   }
 
   // Obtener un gimnasio por ID
-  getGymById(id: number): Observable<Gym> {
-    return this.http.get<Gym>(`${this.getIdUrl}/${id}`);
+  getGymById(_id: string): Observable<Gym> {
+    return this.http.get<Gym>(`${this.getUrl}/${_id}`);
   }
 
   // Actualizar un gimnasio por ID
-  updateGym(id: number, gym: Gym): Observable<Gym> {
-    return this.http.put<Gym>(`${this.getIdUrl}/${id}`, gym);
+  updateGym(gym: Gym): Observable<Gym> {
+    console.log("id", gym._id)
+    return this.http.put<Gym>(`${this.getUrl}/${gym._id}`, gym);
   }
 
   // Eliminar un gimnasio por ID
-  deleteGym(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.getIdUrl}/${id}`);
+  deleteGym(_id: string): Observable<void> {
+    return this.http.delete<void>(`${this.getUrl}/${_id}`);
   }
 }

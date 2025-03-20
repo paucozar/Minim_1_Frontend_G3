@@ -1,0 +1,87 @@
+/* Estilos generales para el componente de gimnasio */
+.gym-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .gym-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .gym-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .gym-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .gym-item:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .gym-item-name {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  .gym-item-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .gym-item-actions button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .gym-item-actions .edit-button {
+    background-color: #4caf50;
+    color: #fff;
+  }
+  
+  .gym-item-actions .delete-button {
+    background-color: #f44336;
+    color: #fff;
+  }
+  
+  .gym-form {
+    margin-top: 20px;
+  }
+  
+  .gym-form input,
+  .gym-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .gym-form button {
+    padding: 10px 20px;
+    background-color: #2196f3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .gym-form button:hover {
+    background-color: #1976d2;
+  }
