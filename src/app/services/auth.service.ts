@@ -21,13 +21,22 @@ export class AuthService {
 
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(this.apiUrl, credentials).pipe(
-      tap(response => {
-        if (response){
+      tap((response: any) => {
+        console.log('Respuesta del backend:', response); // Depuración
+  
+        // Acceder correctamente al campo isAdmin dentro del objeto user
+        if (response && response.user && response.user.isAdmin === true) {
           this.loggedIn.next(true);
-          this.router.navigate(['/users']);
+          this.router.navigate(['/users']); // Redirigir a la gestión de usuarios
+        } else if (response && response.user && response.user.isAdmin === false) {
+          this.loggedIn.next(false);
+          this.router.navigate(['/welcome']); // Redirigir a la página de bienvenida
+        } else {
+          console.error('Estructura de la respuesta inesperada:', response);
+          alert('Error: Respuesta inesperada del servidor.');
         }
       })
-    )
+    );
   }
   logout() {
     this.loggedIn.next(false);

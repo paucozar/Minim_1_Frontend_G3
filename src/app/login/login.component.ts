@@ -46,21 +46,12 @@ ngOnInit(): void {
     const loginData = this.formularioLogin.value;
   
     this.authService.login(loginData).subscribe({
-      next: (response) => {
-        console.log('Login exitoso:', response);
-        alert('Login exitoso');
-        this.loggedin.emit('true');
-          this.router.navigate(['/users']);
+      next: () => {
+        console.log('Login exitoso');
       },
       error: (error) => {
         console.error('Error en el login:', error);
-        if (error.status === 404) {
-          alert('Usuario no encontrado. Por favor, verifica tu email.');
-        } else if (error.status === 400 || error.status === 401) {
-          alert('Contraseña incorrecta. Por favor, verifica tu contraseña.');
-        } else {
-          alert('Error en el servidor. Inténtalo más tarde.');
-        }
+        alert('Error en el servidor. Inténtalo más tarde.');
       }
     });
   }

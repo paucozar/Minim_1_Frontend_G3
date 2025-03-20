@@ -4,7 +4,7 @@ import { GymComponent } from './gym/gym.component';
 import { CombatComponent } from './combat/combat.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-
+import { WelcomeComponent } from './welcome/welcome.component';
 
 
 
@@ -14,6 +14,7 @@ export const routes: Routes = [
   { path: 'combats', component: CombatComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'welcome', component: WelcomeComponent }, // Nueva ruta para la página de bienvenida
   { path: '', redirectTo: '/login', pathMatch: 'full' }, // Redirección por defecto
   { path: '**', redirectTo: '/users' } // Ruta para manejar errores 404
 ];
