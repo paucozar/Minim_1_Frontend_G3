@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class GymComponent implements OnInit {
   gyms: Gym[] = [];
-  newGym: Gym = { _id: '', name: '', place: '', price: 0 };
+  newGym: Gym = { _id: '', name: '', place: '', price: 0, password: '', email: '', phone: '' };
   selectedGym: Gym | null = null;
 
   constructor(private gymService: GymService) {}
@@ -39,7 +39,7 @@ export class GymComponent implements OnInit {
     this.gymService.createGym(this.newGym).subscribe(
       (data) => {
         this.gyms.push(data);
-        this.newGym = { _id: '', name: '', place: '', price: 0 }; // Resetear el formulario
+        this.newGym = { _id: '', name: '', place: '', price: 0, password: '', email: '', phone: '' }; // Resetear el formulario
       },
       (error) => {
         console.error('Error al crear gimnasio:', error);

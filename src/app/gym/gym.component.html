@@ -6,6 +6,9 @@
       <input [(ngModel)]="selectedGym.name" name="name" placeholder="Nombre" required />
       <input [(ngModel)]="selectedGym.place" name="place" placeholder="Lugar" required />
       <input [(ngModel)]="selectedGym.price" name="price" type="number" placeholder="Precio" required />
+      <input [(ngModel)]="selectedGym.email" name="email" type="string" placeholder="email" required />
+      <input [(ngModel)]="selectedGym.password" name="password" type="string" placeholder="password" required />
+      <input [(ngModel)]="selectedGym.phone" name="phone" type="number" placeholder="phone" required />
       <button type="submit">Actualizar</button>
       <button type="button" (click)="selectedGym = null">Cancelar</button>
     </form>
@@ -15,6 +18,10 @@
         <input [(ngModel)]="newGym.name" name="name" placeholder="Nombre" required />
         <input [(ngModel)]="newGym.place" name="place" placeholder="Lugar" required />
         <input [(ngModel)]="newGym.price" name="price" type="number" placeholder="Precio" required />
+        <input [(ngModel)]="newGym.email" name="email" type="string" placeholder="email" required />
+        <input [(ngModel)]="newGym.password" name="password" type="string" placeholder="password" required />
+        <input [(ngModel)]="newGym.phone" name="phone" type="number" placeholder="phone" required />
+        
         <button type="submit">Crear</button>
       </form>
     </ng-template>

@@ -3,6 +3,9 @@ export interface Gym {
     name: string;
     place: string;
     price: number;
+    password: string;
+    email: string;
+    phone: string;
 }
 
 export class Gym implements Gym {
