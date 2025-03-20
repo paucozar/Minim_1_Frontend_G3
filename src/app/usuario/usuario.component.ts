@@ -4,6 +4,7 @@ import { User } from '../models/user.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user',
@@ -14,7 +15,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 })
 export class UserComponent implements OnInit {
   users: User[] = [];
-  newUser: User = { id: '', name: '', email: '', birthDate: new Date(), isAdmin: false, isHidden: false, password: '' };
+  newUser: User = { _id: '', name: '', email: '', birthDate: new Date(), isAdmin: false, isHidden: false, password: '' };
   selectedUser: User | null = null;
   page: number = 1;
   pageSize: number = 10;
@@ -50,7 +51,7 @@ export class UserComponent implements OnInit {
     this.userService.createUser(this.newUser).subscribe(
       (data) => {
         this.users.push(data);
-        this.newUser = { id: '', name: '', email: '', birthDate: new Date(), isAdmin: false, isHidden: false, password: '' }; // Resetear el formulario
+        this.newUser = { _id: '', name: '', email: '', birthDate: new Date(), isAdmin: false, isHidden: false, password: '' }; // Resetear el formulario
         alert('Usuario creado exitosamente');
       },
       (error) => {
@@ -63,9 +64,10 @@ export class UserComponent implements OnInit {
   // Actualizar un usuario
   updateUser(): void {
     if (this.selectedUser) {
-      this.userService.updateUser(this.selectedUser.id, this.selectedUser).subscribe(
+      console.log("update user", this.selectedUser);
+      this.userService.updateUser(this.selectedUser).subscribe(
         (data) => {
-          const index = this.users.findIndex((u) => u.id === data.id);
+          const index = this.users.findIndex((u) => u._id === data._id);
           if (index !== -1) {
             this.users[index] = data;
             alert('Usuario actualizado exitosamente');
@@ -81,13 +83,14 @@ export class UserComponent implements OnInit {
   }
 
   // Ocultar un usuario
-  hideUser(id: string, isHidden: boolean): void {
-    this.userService.hideUser(id, isHidden).subscribe(
+  hideUser(_id: string, isHidden: boolean): void {
+    this.userService.hideUser(_id, isHidden).subscribe(
       (data) => {
-        const index = this.users.findIndex((u) => u.id === data.id);
+        const index = this.users.findIndex((u) => u._id === data._id);
         if (index !== -1) {
           this.users[index].isHidden = isHidden;
           alert('Usuario ocultado exitosamente');
+          console.log("hide user", this.users[index]);
         }
       },
       (error) => {

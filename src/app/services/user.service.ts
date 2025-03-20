@@ -28,13 +28,14 @@ export class UserService {
   }
 
   // Actualizar un usuario por ID
-  updateUser(id: string, user: User): Observable<User> {
-    return this.http.put<User>(`${this.updateUrl}/${id}`, user);
+  updateUser(user: User): Observable<User> {
+    console.log("user", user)
+    return this.http.put<User>(`${this.updateUrl}/${user._id}`, user);
   }
 
   // Ocultar un usuario por ID
-  hideUser(id: string, isHidden: boolean): Observable<User> {
-    return this.http.put<User>(`${this.hideUrl}/${id}/oculto`, { isHidden });
+  hideUser(_id: string, isHidden: boolean): Observable<User> {
+    return this.http.put<User>(`${this.hideUrl}/${_id}/oculto`, { isHidden });
   }
 
 }

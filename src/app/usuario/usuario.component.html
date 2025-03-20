@@ -65,7 +65,7 @@
       <span>Usuario: {{ user.name }} - Correo: {{ user.email }}</span>
       <div>
         <button class="btn btn-info btn-sm mr-2" (click)="selectUser(user)">Editar</button>
-        <button class="btn btn-warning btn-sm mr-2" (click)="hideUser(user.id, !user.isHidden)"> {{user.isHidden ? 'Mostrar' : 'Ocultar' }}</button>
+        <button class="btn btn-warning btn-sm mr-2" (click)="hideUser(user._id, !user.isHidden)"> {{user.isHidden ? 'Mostrar' : 'Ocultar' }}</button>
       </div>
     </li>
   </ul>
