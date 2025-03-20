@@ -1,8 +1,15 @@
-<nav>
-  <ul>
-    <li><a routerLink="/users">Usuarios</a></li>
-    <li><a routerLink="/gyms">Gimnasios</a></li>
-    <li><a routerLink="/combats">Combates</a></li>
-  </ul>
-</nav>
+
+@if(loggedin){
+  <div>
+    <h1>Bienvenido </h1>
+    <button routerLink="/users" class="btn btn-primary">Usuarios</button>
+    <button routerLink="/gyms" class="btn btn-primary">Gimnasios</button>
+    <button routerLink="/combats" class="btn btn-primary">Combates</button>
+    <button (click)="logout()" class="btn btn-secondary">Cerrar sesión</button>
+  </div>
+}
+@else {
+  <h1>Bienvenido, introduce tus datos</h1>
+}
+
 <router-outlet></router-outlet>

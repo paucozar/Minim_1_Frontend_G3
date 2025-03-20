@@ -6,6 +6,7 @@ import { OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-login',
   imports: [ReactiveFormsModule, CommonModule,RouterModule],
@@ -14,12 +15,6 @@ import { Router, RouterModule } from '@angular/router';
   standalone: true
 })
 export class LoginComponent implements OnInit {
-  
-
-
-
-  date: Date = new Date("2025-08-14");
-  Prova: string = "Este texto deberia estar en mayusculas";
   formularioLogin: FormGroup;
   authService = inject(AuthService);
   private router = inject(Router);
@@ -34,8 +29,8 @@ export class LoginComponent implements OnInit {
   }
 ngOnInit(): void {
     this.formularioLogin = this.form.group({
-      email: ['eve.holt@reqres.in', [Validators.required, Validators.email]], // Valor predeterminado para el email
-      password: ['cityslicka', [Validators.required, Validators.minLength(8)]] // Valor predeterminado para la contraseña
+      email: ['', [Validators.required, Validators.email]], // Valor predeterminado para el email
+      password: ['', [Validators.required, Validators.minLength(8)]] // Valor predeterminado para la contraseña
     });
   }
   hasError(controlName:string, errorType:string){
@@ -53,7 +48,9 @@ ngOnInit(): void {
     this.authService.login(loginData).subscribe({
       next: (response) => {
         console.log('Login exitoso:', response);
-        this.router.navigate(['/users']); // Redirigir al componente de usuarios
+        alert('Login exitoso');
+        this.loggedin.emit('true');
+          this.router.navigate(['/users']);
       },
       error: (error) => {
         console.error('Error en el login:', error);

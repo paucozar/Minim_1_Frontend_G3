@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { UserService } from '../services/user.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -18,16 +21,29 @@ export class RegisterComponent {
 
   constructor(
     private form: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private authService: AuthService,
+    private router: Router
   ) {
     this.formularioRegistre = this.form.group({
       name: ['', Validators.required],
       birthDate: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      isAdmin: [false],
-      isHidden: [false]
-    });
+      confirmPassword: ['', Validators.required]
+    }, {validator: this.passwordMatchValidator});
+  }
+
+  ngOnInit(): void {}
+
+  passwordMatchValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const password = control.get('password');
+    const confirmPassword = control.get('confirmPassword');
+    if (password && confirmPassword && password.value !== confirmPassword.value) {
+      confirmPassword.setErrors({ passwordMismatch: true });
+      return { 'passwordMismatch': true };
+    }
+    return null;
   }
 
   teError(camp: string, tipusError: string): boolean {
@@ -53,8 +69,10 @@ export class RegisterComponent {
       next: () => {
         // Activa el evento de finalización del registro
         this.registreComplet.emit();
+        alert('Registro exitoso');
         // Restablecer formularios
         this.formularioRegistre.reset();
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error('Error al registrar:', err);
