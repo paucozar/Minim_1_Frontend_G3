@@ -5,11 +5,9 @@ import { AuthService } from '../services/auth.service';
 import { OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
-
-
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, CommonModule,RouterModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   standalone: true
@@ -20,20 +18,23 @@ export class LoginComponent implements OnInit {
   private router = inject(Router);
   @Output() loggedin = new EventEmitter<string>();
   @Output() exportLoggedIn = new EventEmitter<boolean>();
+  errorMessage: string | null = null; // Propiedad para almacenar mensajes de error
 
-  constructor(private form: FormBuilder){
+  constructor(private form: FormBuilder) {
     this.formularioLogin = this.form.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]], 
     });
   }
-ngOnInit(): void {
+
+  ngOnInit(): void {
     this.formularioLogin = this.form.group({
       email: ['', [Validators.required, Validators.email]], // Valor predeterminado para el email
       password: ['', [Validators.required, Validators.minLength(8)]] // Valor predeterminado para la contraseña
     });
   }
-  hasError(controlName:string, errorType:string){
+
+  hasError(controlName: string, errorType: string) {
     return this.formularioLogin.get(controlName)?.hasError(errorType) && this.formularioLogin.get(controlName)?.touched;  
   }
 
@@ -48,10 +49,11 @@ ngOnInit(): void {
     this.authService.login(loginData).subscribe({
       next: () => {
         console.log('Login exitoso');
+        this.errorMessage = null; // Limpiar el mensaje de error en caso de éxito
       },
       error: (error) => {
         console.error('Error en el login:', error);
-        alert('Error en el servidor. Inténtalo más tarde.');
+        this.errorMessage = error.message; // Mostrar el mensaje de error en la interfaz
       }
     });
   }

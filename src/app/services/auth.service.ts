@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
-
+import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +21,7 @@ export class AuthService {
     return this.http.post(this.apiUrl, credentials).pipe(
       tap((response: any) => {
         console.log('Respuesta del backend:', response); // Depuración
-  
+
         // Acceder correctamente al campo isAdmin dentro del objeto user
         if (response && response.user && response.user.isAdmin === true) {
           this.loggedIn.next(true);
@@ -35,12 +33,24 @@ export class AuthService {
           console.error('Estructura de la respuesta inesperada:', response);
           alert('Error: Respuesta inesperada del servidor.');
         }
+      }),
+      catchError((error) => {
+        console.error('Error en el login:', error);
+
+        // Manejar el caso de usuario oculto
+        if (error.error && error.error.message === 'Este usuario está oculto y no puede iniciar sesión') {
+          alert('Este usuario está oculto y no puede iniciar sesión.');
+        } else {
+          alert('Error en el servidor. Inténtalo más tarde.');
+        }
+
+        return throwError(() => new Error(error.error.message || 'Error al iniciar sesión.'));
       })
     );
   }
+
   logout() {
     this.loggedIn.next(false);
     this.router.navigate(['/login']);
   }
-
 }
