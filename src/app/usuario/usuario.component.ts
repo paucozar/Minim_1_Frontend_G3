@@ -85,17 +85,14 @@ export class UserComponent implements OnInit {
   // Ocultar un usuario
   hideUser(_id: string, isHidden: boolean): void {
     this.userService.hideUser(_id, isHidden).subscribe(
-      (data) => {
-        const index = this.users.findIndex((u) => u._id === data._id);
-        if (index !== -1) {
-          this.users[index].isHidden = isHidden;
-          alert('Usuario ocultado exitosamente');
-          console.log("hide user", this.users[index]);
-        }
+      () => {
+        // Refresh the user list after successfully hiding/showing the user
+        this.getUsers();
+        alert(`Usuario ${isHidden ? 'ocultado' : 'mostrado'} exitosamente`);
       },
       (error) => {
-        console.error('Error al eliminar usuario:', error);
-        alert('Error al ocultar usuario' + JSON.stringify(error));
+        console.error('Error al ocultar/mostrar usuario:', error);
+        alert('Error al ocultar/mostrar usuario: ' + JSON.stringify(error));
       }
     );
   }

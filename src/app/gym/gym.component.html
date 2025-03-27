@@ -1,37 +1,66 @@
-<div>
-    <h2>Gestión de Gimnasios</h2>
-  
-    <!-- Formulario para crear o actualizar gimnasio -->
-    <form *ngIf="selectedGym; else newGymForm" (ngSubmit)="updateGym()">
-      <input [(ngModel)]="selectedGym.name" name="name" placeholder="Nombre" required />
-      <input [(ngModel)]="selectedGym.place" name="place" placeholder="Lugar" required />
-      <input [(ngModel)]="selectedGym.price" name="price" type="number" placeholder="Precio" required />
-      <input [(ngModel)]="selectedGym.email" name="email" type="string" placeholder="email" required />
-      <input [(ngModel)]="selectedGym.password" name="password" type="string" placeholder="password" required />
-      <input [(ngModel)]="selectedGym.phone" name="phone" type="number" placeholder="phone" required />
-      <button type="submit">Actualizar</button>
-      <button type="button" (click)="selectedGym = null">Cancelar</button>
+<div class="gym-container">
+  <h2 class="gym-header">Gestión de Gimnasios</h2>
+
+  <!-- Formulario para crear o actualizar gimnasio -->
+  <form *ngIf="selectedGym; else newGymForm" (ngSubmit)="updateGym()" class="gym-form">
+    <div class="form-group">
+      <input [(ngModel)]="selectedGym.name" name="name" class="form-control" placeholder="Nombre" required />
+    </div>
+    <div class="form-group">
+      <input [(ngModel)]="selectedGym.place" name="place" class="form-control" placeholder="Lugar" required />
+    </div>
+    <div class="form-group">
+      <input [(ngModel)]="selectedGym.price" name="price" class="form-control" type="number" placeholder="Precio" required />
+    </div>
+    <div class="form-group">
+      <input [(ngModel)]="selectedGym.email" name="email" class="form-control" type="email" placeholder="Email" required />
+    </div>
+    <div class="form-group">
+      <input [(ngModel)]="selectedGym.password" name="password" class="form-control" type="password" placeholder="Contraseña" required />
+    </div>
+    <div class="form-group">
+      <input [(ngModel)]="selectedGym.phone" name="phone" class="form-control" type="number" placeholder="Teléfono" required />
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-success">Actualizar</button>
+      <button type="button" class="btn btn-secondary" (click)="selectedGym = null">Cancelar</button>
+    </div>
+  </form>
+
+  <ng-template #newGymForm>
+    <form (ngSubmit)="createGym()" class="gym-form">
+      <div class="form-group">
+        <input [(ngModel)]="newGym.name" name="name" class="form-control" placeholder="Nombre" required />
+      </div>
+      <div class="form-group">
+        <input [(ngModel)]="newGym.place" name="place" class="form-control" placeholder="Lugar" required />
+      </div>
+      <div class="form-group">
+        <input [(ngModel)]="newGym.price" name="price" class="form-control" type="number" placeholder="Precio" required />
+      </div>
+      <div class="form-group">
+        <input [(ngModel)]="newGym.email" name="email" class="form-control" type="email" placeholder="Email" required />
+      </div>
+      <div class="form-group">
+        <input [(ngModel)]="newGym.password" name="password" class="form-control" type="password" placeholder="Contraseña" required />
+      </div>
+      <div class="form-group">
+        <input [(ngModel)]="newGym.phone" name="phone" class="form-control" type="number" placeholder="Teléfono" required />
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Crear</button>
+      </div>
     </form>
-  
-    <ng-template #newGymForm>
-      <form (ngSubmit)="createGym()">
-        <input [(ngModel)]="newGym.name" name="name" placeholder="Nombre" required />
-        <input [(ngModel)]="newGym.place" name="place" placeholder="Lugar" required />
-        <input [(ngModel)]="newGym.price" name="price" type="number" placeholder="Precio" required />
-        <input [(ngModel)]="newGym.email" name="email" type="string" placeholder="email" required />
-        <input [(ngModel)]="newGym.password" name="password" type="string" placeholder="password" required />
-        <input [(ngModel)]="newGym.phone" name="phone" type="number" placeholder="phone" required />
-        
-        <button type="submit">Crear</button>
-      </form>
-    </ng-template>
-  
-    <!-- Lista de gimnasios -->
-    <ul>
-      <li *ngFor="let gym of gyms">
-        {{ gym.name }} - {{ gym.place }} - ${{ gym.price }}
-        <button (click)="selectGym(gym)">Editar</button>
-        <button (click)="deleteGym(gym._id)">Eliminar</button>
-      </li>
-    </ul>
-  </div>
+  </ng-template>
+
+  <!-- Lista de gimnasios -->
+  <ul class="list-group gym-list">
+    <li *ngFor="let gym of gyms" class="list-group-item d-flex justify-content-between align-items-center">
+      <span>{{ gym.name }} - {{ gym.place }} - ${{ gym.price }}</span>
+      <div>
+        <button class="btn btn-info btn-sm mr-2" (click)="selectGym(gym)">Editar</button>
+        <button class="btn btn-danger btn-sm" (click)="deleteGym(gym._id)">Eliminar</button>
+      </div>
+    </li>
+  </ul>
+</div>
