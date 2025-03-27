@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { tap } from 'rxjs/operators';
+import { CreateUserDTO } from '../models/user.model';
 
 @Component({
   selector: 'app-user',
@@ -42,13 +43,25 @@ export class UserComponent implements OnInit {
     );
   }
 
-  // Crear un nuevo usuario
   createUser(): void {
     if (!this.newUser.name || !this.newUser.email || !this.newUser.birthDate || !this.newUser.password) {
       alert('Por favor, complete todos los campos requeridos');
       return;
     }
-    this.userService.createUser(this.newUser).subscribe(
+  
+    // Crear un objeto del tipo CreateUserDTO
+    const userToCreate: CreateUserDTO = {
+      name: this.newUser.name,
+      birthDate: new Date(this.newUser.birthDate),
+      email: this.newUser.email,
+      password: this.newUser.password,
+      isAdmin: this.newUser.isAdmin,
+      isHidden: this.newUser.isHidden,
+    };
+  
+    console.log('Datos enviados al backend:', userToCreate);
+  
+    this.userService.createUser(userToCreate).subscribe(
       (data) => {
         this.users.push(data);
         this.newUser = { _id: '', name: '', email: '', birthDate: new Date(), isAdmin: false, isHidden: false, password: '' }; // Resetear el formulario
@@ -56,10 +69,13 @@ export class UserComponent implements OnInit {
       },
       (error) => {
         console.error('Error al crear usuario:', error);
-        alert('Error al crear usuario');
+        alert('Error al crear usuario: ' + (error.error?.message || 'Error desconocido'));
       }
     );
   }
+
+
+
 
   // Actualizar un usuario
   updateUser(): void {

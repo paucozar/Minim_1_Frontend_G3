@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../models/user.model';
+import { CreateUserDTO, User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   // Crear un nuevo usuario
-  createUser(user: User): Observable<User> {
+  createUser(user: CreateUserDTO): Observable<User> {
     return this.http.post<User>(this.registerUrl, user);
   }
 
