@@ -100,7 +100,7 @@
     color: #ff0000;
     font-size: 0.875em;
   }
-  .text-muted {
-    color: grey !important;
-    text-decoration: line-through;
+  .hidden-user {
+    background-color: lightgray;
+    color: gray;
   }
