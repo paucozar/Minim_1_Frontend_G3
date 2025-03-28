@@ -59,15 +59,19 @@
     </ng-template>
   </div>
 
-<ul class="list-group user-list">
-  <li *ngFor="let user of users | paginate: { itemsPerPage: pageSize, currentPage: page }" 
-      class="list-group-item d-flex justify-content-between align-items-center">
-    <span>Usuario: {{ user.name }} - Correo: {{ user.email }}</span>
-    <div>
-      <button class="btn btn-info btn-sm mr-2" (click)="selectUser(user)">Editar</button>
-    </div>
-  </li>
-</ul>
+  <ul class="list-group user-list">
+    <li *ngFor="let user of users | paginate: { itemsPerPage: pageSize, currentPage: page }" 
+        class="list-group-item d-flex justify-content-between align-items-center"
+        [ngClass]="{ 'hidden-user': user.isHidden }">
+      <span>Usuario: {{ user.name }} - Correo: {{ user.email }}</span>
+      <div>
+        <button class="btn btn-info btn-sm mr-2" (click)="selectUser(user)">Editar</button>
+        <button class="btn btn-warning btn-sm" (click)="hideUser(user._id, !user.isHidden)">
+          {{ user.isHidden ? "Mostrar" : "Ocultar" }}
+        </button>
+      </div>
+    </li>
+  </ul>
   
   <div class="pagination-controls">
     <button class="btn btn-primary" (click)="previousPage()" [disabled]="page === 1">Anterior</button>
