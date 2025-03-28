@@ -33,7 +33,10 @@ export class UserComponent implements OnInit {
   getUsers(): void {
     this.userService.getUsers(this.page, this.pageSize).subscribe(
       (data) => {
+        console.log('Usuarios obtenidos:', data);
         this.users = data.users;
+        console.log('Users', this.users);
+        
         this.totalUsers = data.totalUsers;
         this.totalPages = data.totalPages;
       },
