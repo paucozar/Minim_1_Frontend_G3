@@ -93,18 +93,21 @@ export class CombatComponent implements OnInit {
   }
 
   // Obtener todos los combates
-  getCombats(): void {
-    this.combatService.getCombats().subscribe({
-      next: (data) => {
-        this.combats = data;
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error al obtener la lista de combates:', error);
-        this.loading = false;
-      }
-    });
-  }
+// Modificar getCombats en combat.component.ts
+// Método getCombats en combat.component.ts
+getCombats(): void {
+  this.combatService.getCombats().subscribe({
+    next: (data) => {
+      // Filtrar para no mostrar combates que tienen isHidden = true
+      this.combats = data.filter(combat => !combat.isHidden);
+      this.loading = false;
+    },
+    error: (error) => {
+      console.error('Error al obtener la lista de combates:', error);
+      this.loading = false;
+    }
+  });
+}
 
   // Crear un nuevo combate
   createCombat(): void {
@@ -203,4 +206,29 @@ selectCombat(combat: Combat): void {
     const user = this.users.find(u => u._id === userId);
     return user ? user.name : 'Usuario desconocido';
   }
+
+
+hideCombat(id?: string): void {
+  if (!id) {
+    console.error('No se puede ocultar el combate: ID no definido');
+    return;
+  }
+
+  if (confirm('¿Está seguro que desea ocultar este combate?')) {
+    this.loading = true;
+    this.combatService.hideCombat(id, true).subscribe({
+      next: (response) => {
+        // Solo quitamos el combate de la vista, no se elimina de la BD
+        this.combats = this.combats.filter(c => c._id !== id);
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Error al ocultar el combate:', error);
+        this.loading = false;
+      }
+    });
+  }
+}
+
+
 }

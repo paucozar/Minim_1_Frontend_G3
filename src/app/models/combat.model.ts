@@ -5,6 +5,7 @@ export interface Combat {
     gym: string;
     date: Date | string; 
     boxers: string[];
+    isHidden?: boolean;
 }
 
 export class Combat implements Combat {

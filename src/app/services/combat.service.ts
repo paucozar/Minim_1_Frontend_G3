@@ -68,10 +68,9 @@ export class CombatService {
       .pipe(catchError(this.handleError));
   }
 
-  // Ocultar/mostrar combate
-  hideCombat(_id: string, isHidden: boolean): Observable<Combat> {
-    return this.http.put<Combat>(`${this.apiUrl}/${_id}/oculto`, { isHidden })
-      .pipe(catchError(this.handleError));
+  // Ocultar combate
+  hideCombat(id: string, isHidden: boolean): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}/oculto`, { isHidden });
   }
 
   // Procesar datos de boxeadores, asegurarse de que sea un array
@@ -109,4 +108,5 @@ export class CombatService {
     
     return throwError(() => new Error(errorMessage));
   }
+
 }
