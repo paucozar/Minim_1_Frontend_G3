@@ -85,3 +85,8 @@
   .gym-form button:hover {
     background-color: #1976d2;
   }
+  /* Estilo para gimnasios ocultos */
+.hidden-gym {
+  background-color: lightgray;
+  color: gray;
+}

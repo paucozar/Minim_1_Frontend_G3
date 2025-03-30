@@ -81,4 +81,18 @@ export class GymComponent implements OnInit {
   selectGym(gym: Gym): void {
     this.selectedGym = { ...gym }; // Crear una copia para evitar modificar directamente
   }
+    // Ocultar o mostrar un gimnasio
+    hideGym(_id: string, isHidden: boolean): void {
+      this.gymService.hideGym(_id, isHidden).subscribe(
+        () => {
+          // Actualizar la lista de gimnasios después de ocultar/mostrar
+          this.getGyms();
+          alert(`Gimnasio ${isHidden ? 'ocultado' : 'mostrado'} exitosamente`);
+        },
+        (error) => {
+          console.error('Error al ocultar/mostrar gimnasio:', error);
+          alert('Error al ocultar/mostrar gimnasio: ' + JSON.stringify(error));
+        }
+      );
+    }
 }

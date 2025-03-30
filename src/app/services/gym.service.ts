@@ -39,4 +39,8 @@ export class GymService {
   deleteGym(_id: string): Observable<void> {
     return this.http.delete<void>(`${this.getUrl}/${_id}`);
   }
+  // Ocultar o mostrar un gimnasio por ID
+hideGym(_id: string, isHidden: boolean): Observable<Gym> {
+  return this.http.put<Gym>(`${this.getUrl}/${_id}/oculto`, { isHidden });
+}
 }

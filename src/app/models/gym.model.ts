@@ -6,6 +6,7 @@ export interface Gym {
     password: string;
     email: string;
     phone: string;
+    isHidden?: boolean;
 }
 
 export class Gym implements Gym {
