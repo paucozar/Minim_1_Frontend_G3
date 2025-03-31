@@ -7,10 +7,11 @@ import { Gym } from '../models/gym.model';
 import { User } from '../models/user.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-combat',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, NgxPaginationModule],
   standalone: true,
   templateUrl: './combat.component.html',
   styleUrl: './combat.component.css'
@@ -23,6 +24,12 @@ export class CombatComponent implements OnInit {
   selectedCombat: Combat | null = null;
   boxers: string[] = [];
   loading = false;
+
+  // Propiedades de paginación
+  page: number = 1;
+  pageSize: number = 10;
+  totalCombats: number = 0;
+  totalPages: number = 0;
 
   constructor(
     private combatService: CombatService,
@@ -41,12 +48,12 @@ export class CombatComponent implements OnInit {
     this.gymService.getGyms().subscribe({
       next: (data) => {
         this.gyms = data;
-        
+
         // Obtener datos de los usuarios - Usar el valor permitido de pageSize (50)
         this.userService.getUsers(1, 25).subscribe({
           next: (userData) => {
             this.users = userData.users;
-            
+
             // Si hay muchos datos de usuarios, continuar cargando las páginas restantes
             if (userData.totalPages > 1) {
               this.loadRemainingUsers(2, userData.totalPages);
@@ -76,7 +83,7 @@ export class CombatComponent implements OnInit {
       this.getCombats();
       return;
     }
-    
+
     this.userService.getUsers(currentPage, 25).subscribe({
       next: (userData) => {
         // Combinar datos de los usuarios
@@ -93,25 +100,48 @@ export class CombatComponent implements OnInit {
   }
 
   // Obtener todos los combates
-// Modificar getCombats en combat.component.ts
-// Método getCombats en combat.component.ts
-getCombats(): void {
-  this.combatService.getCombats().subscribe({
-    next: (data) => {
-      // Filtrar para no mostrar combates que tienen isHidden = true
-      this.combats = data.filter(combat => !combat.isHidden);
-      this.loading = false;
-    },
-    error: (error) => {
-      console.error('Error al obtener la lista de combates:', error);
-      this.loading = false;
+  getCombats(): void {
+    this.loading = true;
+    
+    this.combatService.getCombats(this.page, this.pageSize).subscribe({
+      next: (data) => {
+        // Asegúrese de que data.combats existe, de lo contrario utilice una matriz vacía
+        const combatsArray = data.combats || [];
+        
+        // Filtra los registros de batalla ocultos
+        this.combats = combatsArray.filter((combat: Combat) => !combat.isHidden);
+        
+        // Actualización de la información de paginación
+        this.totalCombats = data.totalCombats || 0;
+        this.totalPages = data.totalPages || 0;
+        
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('获取战斗列表时出错:', error);
+        this.loading = false;
+      }
+    });
+  }
+
+  // Añadir métodos de navegación de páginas
+  previousPage(): void {
+    if (this.page > 1) {
+      this.page--;
+      this.getCombats();
     }
-  });
-}
+  }
+
+  nextPage(): void {
+    if (this.page < this.totalPages) {
+      this.page++;
+      this.getCombats();
+    }
+  }
 
   // Crear un nuevo combate
   createCombat(): void {
-    if(this.newCombat.date instanceof Date) {
+    if (this.newCombat.date instanceof Date) {
       this.newCombat.date = this.newCombat.date.toISOString().split('T')[0];
     }
     this.loading = true;
@@ -172,23 +202,22 @@ getCombats(): void {
   }
 
   // Seleccionar combate para editar
-// Seleccionar combate para editar
-selectCombat(combat: Combat): void {
-  // Crear una copia profunda para evitar modificar directamente
-  this.selectedCombat = JSON.parse(JSON.stringify(combat));
-  
-  // Verificar que selectedCombat existe antes de acceder a date
-  if (this.selectedCombat && this.selectedCombat.date) {
-    const date = new Date(this.selectedCombat.date);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    this.selectedCombat.date = `${year}-${month}-${day}`;
+  selectCombat(combat: Combat): void {
+    // Crear una copia profunda para evitar modificar directamente
+    this.selectedCombat = JSON.parse(JSON.stringify(combat));
+
+    // Verificar que selectedCombat existe antes de acceder a date
+    if (this.selectedCombat && this.selectedCombat.date) {
+      const date = new Date(this.selectedCombat.date);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      this.selectedCombat.date = `${year}-${month}-${day}`;
+    }
+
+    // Desplazarse al formulario
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  
-  // Desplazarse al formulario
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
 
   // Cancelar la edición
   cancelEdit(): void {
@@ -208,27 +237,27 @@ selectCombat(combat: Combat): void {
   }
 
 
-hideCombat(id?: string): void {
-  if (!id) {
-    console.error('No se puede ocultar el combate: ID no definido');
-    return;
-  }
+  hideCombat(id?: string): void {
+    if (!id) {
+      console.error('No se puede ocultar el combate: ID no definido');
+      return;
+    }
 
-  if (confirm('¿Está seguro que desea ocultar este combate?')) {
-    this.loading = true;
-    this.combatService.hideCombat(id, true).subscribe({
-      next: (response) => {
-        // Solo quitamos el combate de la vista, no se elimina de la BD
-        this.combats = this.combats.filter(c => c._id !== id);
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error al ocultar el combate:', error);
-        this.loading = false;
-      }
-    });
+    if (confirm('¿Está seguro que desea ocultar este combate?')) {
+      this.loading = true;
+      this.combatService.hideCombat(id, true).subscribe({
+        next: (response) => {
+          // Solo quitamos el combate de la vista, no se elimina de la BD
+          this.combats = this.combats.filter(c => c._id !== id);
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error('Error al ocultar el combate:', error);
+          this.loading = false;
+        }
+      });
+    }
   }
-}
 
 
 }

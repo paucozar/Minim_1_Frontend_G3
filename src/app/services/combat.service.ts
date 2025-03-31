@@ -8,9 +8,9 @@ import { Combat } from '../models/combat.model';
   providedIn: 'root',
 })
 export class CombatService {
-  private apiUrl = 'http://localhost:9000/api/combat';
-  
-  constructor(private http: HttpClient) {}
+  private apiUrl = 'http://localhost:9000/api';
+
+  constructor(private http: HttpClient) { }
 
   // Crear nuevo combate
   createCombat(combat: Combat): Observable<Combat> {
@@ -20,22 +20,22 @@ export class CombatService {
       date: combat.date instanceof Date ? combat.date : new Date(combat.date),
       boxers: this.processBoxers(combat.boxers) // Asegurarse de que boxers sea un array
     };
-    
+
     console.log('Datos enviados al servidor:', combatData);
-    
-    return this.http.post<Combat>(this.apiUrl, combatData)
-      .pipe(catchError(this.handleError));
+
+    return this.http.post<Combat>(`${this.apiUrl}/combat`, combatData)
+    .pipe(catchError(this.handleError));
   }
 
   // Obtener todos los combates
-  getCombats(): Observable<Combat[]> {
-    return this.http.get<Combat[]>(this.apiUrl)
+  getCombats(page: number = 1, pageSize: number = 10): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/combat?page=${page}&pageSize=${pageSize}`)
       .pipe(catchError(this.handleError));
   }
 
   // Obtener combate por ID
   getCombatById(_id: string): Observable<Combat> {
-    return this.http.get<Combat>(`${this.apiUrl}/${_id}`)
+    return this.http.get<Combat>(`${this.apiUrl}/combat/${_id}`)
       .pipe(catchError(this.handleError));
   }
 
@@ -52,25 +52,25 @@ export class CombatService {
       boxers: this.processBoxers(combat.boxers)
     };
 
-    return this.http.put<Combat>(`${this.apiUrl}/${combat._id}`, updateData)
+    return this.http.put<Combat>(`${this.apiUrl}/combat/${combat._id}`, updateData)
       .pipe(catchError(this.handleError));
   }
 
   // Eliminar combate
   deleteCombat(_id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${_id}`)
+    return this.http.delete<void>(`${this.apiUrl}/combat/${_id}`)
       .pipe(catchError(this.handleError));
   }
 
   // Obtener boxeadores por ID de combate
   getBoxersByCombatId(_id: string): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/${_id}/boxers`)
+    return this.http.get<string[]>(`${this.apiUrl}/combat/${_id}/boxers`)
       .pipe(catchError(this.handleError));
   }
 
   // Ocultar combate
   hideCombat(id: string, isHidden: boolean): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}/oculto`, { isHidden });
+    return this.http.put<any>(`${this.apiUrl}/combat/${id}/oculto`, { isHidden });
   }
 
   // Procesar datos de boxeadores, asegurarse de que sea un array
@@ -93,7 +93,7 @@ export class CombatService {
   // Manejo de errores
   private handleError(error: HttpErrorResponse) {
     console.error('Error de API:', error);
-    
+
     let errorMessage = 'Ocurrió un error desconocido';
     if (error.error instanceof ErrorEvent) {
       // Error del lado del cliente
@@ -105,7 +105,7 @@ export class CombatService {
         errorMessage += `, Detalles: ${error.error.message}`;
       }
     }
-    
+
     return throwError(() => new Error(errorMessage));
   }
 
