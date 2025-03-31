@@ -23,7 +23,7 @@ export class UserComponent implements OnInit {
   totalUsers: number = 0;
   totalPages: number = 0;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -36,7 +36,7 @@ export class UserComponent implements OnInit {
         console.log('Usuarios obtenidos:', data);
         this.users = data.users;
         console.log('Users', this.users);
-        
+
         this.totalUsers = data.totalUsers;
         this.totalPages = data.totalPages;
       },
@@ -51,7 +51,7 @@ export class UserComponent implements OnInit {
       alert('Por favor, complete todos los campos requeridos');
       return;
     }
-  
+
     // Crear un objeto del tipo CreateUserDTO
     const userToCreate: CreateUserDTO = {
       name: this.newUser.name,
@@ -61,9 +61,9 @@ export class UserComponent implements OnInit {
       isAdmin: this.newUser.isAdmin,
       isHidden: this.newUser.isHidden,
     };
-  
+
     console.log('Datos enviados al backend:', userToCreate);
-  
+
     this.userService.createUser(userToCreate).subscribe(
       (data) => {
         this.users.push(data);
