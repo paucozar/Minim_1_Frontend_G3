@@ -55,7 +55,7 @@
 
  <!-- Lista de gimnasios -->
  <ul class="list-group gym-list">
-  <li *ngFor="let gym of gyms" 
+  <li *ngFor="let gym of gyms | paginate: { itemsPerPage: pageSize, currentPage: page, totalItems: totalGyms }" 
       class="list-group-item d-flex justify-content-between align-items-center"
       [ngClass]="{ 'hidden-gym': gym.isHidden }">
     <span>Gimnasio: {{ gym.name }} - Lugar: {{ gym.place }}</span>
@@ -67,4 +67,16 @@
     </div>
   </li>
 </ul>
+</div>
+
+<div class="pagination-controls">
+  <pagination-controls (pageChange)="page = $event; getGyms()"></pagination-controls>
+</div>
+<div class="form-group">
+  <label for="pageSize">Gimnasios por página:</label>
+  <select [(ngModel)]="pageSize" name="pageSize" id="pageSize" class="form-control" (change)="getGyms()">
+    <option [value]="10">10</option>
+    <option [value]="25">25</option>
+    <option [value]="50">50</option>
+  </select>
 </div>

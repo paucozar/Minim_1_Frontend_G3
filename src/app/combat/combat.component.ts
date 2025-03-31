@@ -45,9 +45,9 @@ export class CombatComponent implements OnInit {
   // Cargar todos los datos necesarios
   loadAllData(): void {
     // Obtener datos del gimnasio
-    this.gymService.getGyms().subscribe({
+    this.gymService.getGyms(this.page, this.pageSize).subscribe({
       next: (data) => {
-        this.gyms = data;
+        this.gyms = data.gyms;
 
         // Obtener datos de los usuarios - Usar el valor permitido de pageSize (50)
         this.userService.getUsers(1, 25).subscribe({

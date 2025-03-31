@@ -3,10 +3,11 @@ import { GymService } from '../services/gym.service';
 import { Gym } from '../models/gym.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-gym',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, NgxPaginationModule],
   standalone: true,
   templateUrl: './gym.component.html',
   styleUrls: ['./gym.component.css']
@@ -15,6 +16,11 @@ export class GymComponent implements OnInit {
   gyms: Gym[] = [];
   newGym: Gym = { _id: '', name: '', place: '', price: 0, password: '', email: '', phone: '' };
   selectedGym: Gym | null = null;
+  page: number = 1;
+  pageSize: number = 10;
+  totalGyms: number = 0;
+  totalPages: number = 0;
+
 
   constructor(private gymService: GymService) {}
 
@@ -24,9 +30,14 @@ export class GymComponent implements OnInit {
 
   // Obtener todos los gimnasios
   getGyms(): void {
-    this.gymService.getGyms().subscribe(
+    this.gymService.getGyms(this.page, this.pageSize).subscribe(
       (data) => {
-        this.gyms = data;
+        console.log('Gyms obtenidos:', data);
+        this.gyms = data.gyms;
+        console.log('Gyms', this.gyms);
+
+        this.totalGyms = data.totalGyms;
+        this.totalPages = data.totalPages;
       },
       (error) => {
         console.error('Error al obtener gimnasios:', error);

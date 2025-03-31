@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Gym } from '../models/gym.model';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +21,11 @@ export class GymService {
   }
 
   // Obtener todos los gimnasios
-  getGyms(): Observable<Gym[]> {
-    return this.http.get<Gym[]>(this.apiUrl);
+  getGyms(page: number, pageSize: number): Observable<{gyms: Gym[], totalGyms: number, totalPages: number, currentPage: number}> {
+    let params = new HttpParams();
+    params = params.append('page', page.toString());
+    params = params.append('pageSize', pageSize.toString());
+    return this.http.get<{gyms: Gym[], totalGyms: number, totalPages: number, currentPage: number}>(this.apiUrl, { params });
   }
 
   // Obtener un gimnasio por ID
