@@ -7,12 +7,13 @@ import { UserComponent } from "./usuario/usuario.component";
 import { AuthService } from './services/auth.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { ComentariosComponent } from './comentarios/comentarios.component';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, LoginComponent, RegisterComponent, UserComponent, WelcomeComponent, NgxPaginationModule],
+  imports: [RouterOutlet, RouterModule, LoginComponent, RegisterComponent, UserComponent, WelcomeComponent, NgxPaginationModule, ComentariosComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
